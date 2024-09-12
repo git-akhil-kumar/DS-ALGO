@@ -8,12 +8,45 @@ class TreeNode:
 		self.left = None
 		self.right = None
 
-def lca(root, nodea, nodeb) :  
-    return 0
+def path_to_node(root, node) :
+    if not root :
+        return []
+    if root.val == node :
+        return [root.val]
+    
+    left = path_to_node(root.left, node)
+    right = path_to_node(root.right, node)
 
-nums = [1,2,3,-1,-1,4,-1,-1,5,-1,-1]
-node_a = 31
-node_b = 39
+    if left :
+        return left + [root.val]
+    if right :
+        return right + [root.val]
+    return []
+    
+def lca_method_2(root, nodeA, nodeB) :
+    if not root :
+        return None
+    if root.val == nodeA or root.val == nodeB :
+        return root
+    path_to_a = path_to_node(root, nodeA)
+    path_to_b = path_to_node(root, nodeB)
+    lca_node = -1
+    for a, b in zip(path_to_a, path_to_b) :
+        if a != b :
+            break
+        lca_node = a
+    return lca_node
+
+def lca(root, nodea, nodeb) :  
+    if not root :
+         return None
+    if root.val == nodea or root.val == nodeb :
+        return root
+    left = lca(root.left, nodea, nodeb)
+    right = lca(root.right, nodea, nodeb)
+    if left and right :
+        return root
+    return left or right
 
 def createTree(nums):
     n = len(nums)
@@ -24,12 +57,9 @@ def createTree(nums):
         curr = root if curr is None else TreeNode(nums[i])
         left_child_idx, right_child_idx = (2 * i) + 1, (2 * i) + 2
 
-        print('root', i, 'left_child_idx', left_child_idx, 'right_child_idx', right_child_idx)
         if left_child_idx < n and nums[left_child_idx] != -1:
-            print('creating left child', i, nums[left_child_idx])
             curr.left = TreeNode(nums[left_child_idx])
         if right_child_idx < n and nums[right_child_idx] != -1:
-            print('creating right child',i, nums[right_child_idx])
             curr.right = TreeNode(nums[right_child_idx])
         i += 1
         
@@ -57,11 +87,14 @@ def inorder(root):
     if not root :
         return 
     inorder(root.left)
-    print('level order', root.val)
     inorder(root.right)
           
+
+
+nums = [1,2,3]
 root = createTree(nums)
-print(levelOrderTraversal(root))
-inorder(root)
+node_a = 2
+node_b = 3
+
 print(lca(root, node_a, node_b))
 
