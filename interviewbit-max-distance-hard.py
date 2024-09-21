@@ -10,7 +10,6 @@ def maximumGap(nums):
     i = indexes[0]
 
     for j in indexes[1:]:
-        print(i, j)
         if j > i :
             max_gap = max(max_gap, j - i)
         else :

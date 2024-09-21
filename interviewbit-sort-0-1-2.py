@@ -5,7 +5,6 @@ def sortColors(nums):
         return nums
     start, i, end = 0, 0, n-1    
     while i <= end :
-        print(i, nums[i])
         if nums[i] == 0 :
             nums[start], nums[i] = nums[i], nums[start]
             start += 1

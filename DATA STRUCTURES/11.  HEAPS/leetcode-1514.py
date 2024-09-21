@@ -22,7 +22,6 @@ def maxProbability(
         curr_node_prob, curr_node = heappop(max_heap)
 
         curr_node_prob = -curr_node_prob
-        print("curr_node", curr_node, "curr_prob", curr_node_prob)
         if curr_node == end_node:
             return curr_node_prob
 
@@ -34,7 +33,6 @@ def maxProbability(
                 max_prob[neigh_node] = new_prob
                 heappush(max_heap, (-new_prob, neigh_node))
 
-        print(curr_node, "lst", max_heap)
     return 0.00
 
 

@@ -20,7 +20,6 @@ class Solution:
                 i += 1
                 
             if curr_sum >= index.arr_sum :
-                print(curr_sum, start, i, index)
                 if curr_sum > index.arr_sum :
                     index.start = start 
                     index.end = i - 1
