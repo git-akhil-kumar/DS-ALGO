@@ -21,7 +21,6 @@ def solve(num):
                 carry = carry // 10
                 res_size += 1
 
-            print(mul, res[:res_size])
         return res_size
     
     res_size = cal_fact(num)
