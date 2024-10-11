@@ -1,0 +1,120 @@
+Problem Statement: You are tasked with designing a scalable Learning Management System (LMS) that will support:
+
+Authentication and Authorization for different roles such as admin, faculties, and students.
+Content Serving and Management: The system should allow admins and teachers to upload different types of content (video, audio, HTML, PPT, PDF, DOC) and associate it with specific chapters in subjects.
+Learner Progress Tracking: The system should track learners' progress.
+
+Phase 2 requirements will include handling live classes and assignments, and the system must continue to operate efficiently at scale.
+Key Entities to Consider:
+Program: Each program contains multiple semesters.
+Semester: Each semester contains multiple subjects.
+Subject: Each subject contains multiple chapters.
+Chapter: Each chapter contains various types of content (video, audio, etc.).
+Content: Various media types (video, audio, HTML, PPT, PDF, DOC) should be supported and associated with chapters.
+Users: Different roles like students, teachers, and admins should have different permissions.
+Question: Design this Learning Management System focusing on the database design and the architecture that will allow it to scale efficiently.
+Authentication and Authorization:
+How would you implement user roles and permissions (e.g., admin, teachers, students)?
+How would you manage access control for content and progress tracking?
+Content Management:
+How would you store and serve different types of content (videos, PDFs, etc.) efficiently?
+How would you handle metadata for chapters and content?
+What considerations would you make for content delivery at scale?
+Learner Progress Tracking:
+How would you design the database schema to track learners' progress through chapters, subjects, and semesters?
+How would you track completion of various content types and generate reports?
+
+Scaling the System:
+What strategies would you employ to ensure the system can scale to handle thousands or even millions of learners?
+How would you handle performance bottlenecks related to user authentication, content serving, and learner tracking?
+Live Classes and Assignments (Phase 2):
+How would you extend the system to support live classes, including handling real-time communication and user interaction?
+How would you manage assignments, submission, grading, and feedback?
+Additional Constraints:
+Ensure that the system is able to handle large amounts of content and user interactions efficiently.
+Consider how the database will be structured to accommodate future features like live classes and assignments without requiring a complete overhaul of the existing design.
+
+FR ;- Programs Duration Admin, Faculty, Users, Roles
+Same cred with multiple roles
+Options :- Toggle OR do not allow
+
+SQL -> postgres |
+
+Login -> Admin, Faculty
+Roles -> [Admin, Faculty, Students] enum, one-many
+Admin -> Programs
+Name
+Duration
+Max_batch_size
+Btech, Barch, mbbs
+Price
+
+batches :-
+Id
+Start_date
+End_date
+Booking
+
+Batches -> batch1 -> semester start-end jan-june
+Batch2 -> semester - march-
+Btech CS -> 4 semesters
+Batches -> semester
+
+-> Semesters
+name ->
+Duration ->
+Credit ->
+Semester_metdata :-
+
+Subjects
+Name
+Duration
+
+-> chapters
+-> subject_id
+Name
+Credit
+
+Content
+Name
+type(video, …)
+isMain
+
+Users
+role
+[batches]
+
+Student_Enrollements
+-> batch_id
+-> student_id
+-> durations -> []
+-> tracking
+-> isCompleted
+
+[ ] Redis -> [content, ]
+-> redis [subject] 10
+
+Subject -> 10 chapter -> [1/10]-> 10 -> 4/10
+
+5 subject ->  
+10 chapter -> 5 + completed + 5/10
+
+10 video -> content -> 5/10
+
+Student_track_records
+Enrollement_id
+Content_id
+Track : []
+
+(batch) 15 minutes [5 minutes]
+Tracking
+-> Student_id:
+-> EnrollmentId:
+-> Semesters:
+-> Subjects:
+
+Tracking :-1. Content 2. Subject 3. Semester 4. Program -> O(1)
+
+Tradeoff
+
+Actors:- admin, faculty, student
